@@ -83,7 +83,7 @@ spec:
     app: auth-db
 ```
 
-Основную проблема: приложения web-consumer и auth-db находятся в разных Namespace (пространствах имен) Kubernetes. Из-за этого они не могут обнаружить друг друга по короткому DNS-имени.
+Основная проблема: приложения web-consumer и auth-db находятся в разных Namespace (пространствах имен) Kubernetes. Из-за этого они не могут обнаружить друг друга по короткому DNS-имени.
 
 **Выявленная проблема**
 - web-consumer запущен в Namespace web.
@@ -116,9 +116,9 @@ spec:
         - sh
         - -c
         # Теперь сервис auth-db будет найден, т.к. находится в том же namespace
-        - while true; do curl auth-db; sleep 5; done
-        image: radial/busyboxplus:curl
-        name: busybox
+        - while true; do curl -s http://auth-db; sleep 5; done
+        image: curlimages/curl:latest
+        name: curl-container
 ---
 apiVersion: apps/v1
 kind: Deployment
