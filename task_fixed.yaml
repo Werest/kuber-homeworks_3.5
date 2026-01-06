@@ -18,9 +18,9 @@ spec:
         - sh
         - -c
         # Теперь сервис auth-db будет найден, т.к. находится в том же namespace
-        - while true; do curl auth-db; sleep 5; done
-        image: radial/busyboxplus:curl
-        name: busybox
+        - while true; do curl -s http://auth-db; sleep 5; done
+        image: curlimages/curl:latest
+        name: curl-container
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -55,4 +55,5 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
+
     app: auth-db
